@@ -27,6 +27,7 @@
 
 ### データ取得・運用
 - [async_data.md](./async_data.md) … 非同期（async/await / .task / URLSession）とは
+- [viewinspector.md](./viewinspector.md) … ViewInspector（SwiftUIのView単体テスト：inspect() でView階層を検査）とは
 - [pitfalls.md](./pitfalls.md) … 実務でハマる罠まとめ
 
 ## 各ファイルの書式（テンプレ）

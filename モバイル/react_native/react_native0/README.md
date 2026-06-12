@@ -31,6 +31,8 @@
 - [native_modules.md](./native_modules.md) … ネイティブ連携（New Architecture / Expo modules）とは
 - [storage_state.md](./storage_state.md) … 保存 / 状態管理（AsyncStorage / Redux / Zustand）とは
 - [testing.md](./testing.md) … テスト（Jest / RN Testing Library）とは
+- [rntl.md](./rntl.md) … React Native Testing Library（render / screen / fireEvent・ネイティブ要素query）とは
+- [detox.md](./detox.md) … E2E（device / element(by.id()) / expect().toBeVisible()）とは
 - [android_studio.md](./android_studio.md) … Android Studio（React Native用）とは ← Android側のSDK/エミュレータ
 - [pitfalls.md](./pitfalls.md) … 実務でハマる罠まとめ
 

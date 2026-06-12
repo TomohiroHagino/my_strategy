@@ -103,4 +103,4 @@ def client():
 - **`status_code` だけ見てボディ未検証**：200でも中身が空/誤りのことがある。`resp.json()` の内容まで検証する。
 
 ## 関連
-[dependency_injection.md](./dependency_injection.md) / [database.md](./database.md) / [error_handling.md](./error_handling.md)
+[pytest.md](./pytest.md) / [dependency_injection.md](./dependency_injection.md) / [database.md](./database.md) / [error_handling.md](./error_handling.md)

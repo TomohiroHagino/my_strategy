@@ -30,6 +30,7 @@
 - [networking.md](./networking.md) … 通信（http / dio / JSON）とは
 - [packages_pubspec.md](./packages_pubspec.md) … パッケージ（pub / pubspec.yaml）とは
 - [testing.md](./testing.md) … テスト（widget / unit / integration）とは
+- [mocktail.md](./mocktail.md) … mocktail（モック：when/thenReturn・verify・registerFallbackValue）とは
 - [android_studio.md](./android_studio.md) … Android Studio（Flutter用）とは ← VS Code と並ぶIDE選択肢
 - [pitfalls.md](./pitfalls.md) … 実務でハマる罠まとめ
 

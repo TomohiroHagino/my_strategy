@@ -30,6 +30,8 @@
 - [pinia.md](./pinia.md) … 状態管理（Pinia）とは
 - [routing.md](./routing.md) … ルーティング（Vue Router）とは
 - [testing.md](./testing.md) … テスト（Vitest / Vue Test Utils）とは
+- [vue_test_utils.md](./vue_test_utils.md) … Vue Test Utils（mount / trigger / emitted）とは
+- [playwright.md](./playwright.md) … Playwright（実ブラウザE2E）とは
 - [pitfalls.md](./pitfalls.md) … 実務でハマる罠まとめ
 
 > 関連: フルスタック版は [../../nuxt/nuxt3/](../../nuxt/nuxt3/)。

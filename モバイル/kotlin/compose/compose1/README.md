@@ -27,6 +27,7 @@
 ### 非同期・テーマ・運用
 - [async_coroutines.md](./async_coroutines.md) … 非同期（コルーチン / LaunchedEffect）とは
 - [theming.md](./theming.md) … テーマ（Material 3 / MaterialTheme）とは
+- [mockk.md](./mockk.md) … MockK（Kotlinのモック：every/returns・verify・coEvery(suspend)・mockk()）とは
 - [pitfalls.md](./pitfalls.md) … 実務でハマる罠まとめ
 
 ## 各ファイルの書式（テンプレ）

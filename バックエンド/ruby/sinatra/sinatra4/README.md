@@ -29,6 +29,7 @@
 - [data_access.md](./data_access.md) … DB/ORM（内蔵なし＝ActiveRecord/Sequelを足す）
 - [rack_and_filters.md](./rack_and_filters.md) … Rack・ミドルウェア・before/after フィルタ
 - [config_testing.md](./config_testing.md) … 設定（settings/environments）とテスト（Rack::Test）
+- [rack_test.md](./rack_test.md) … Rack::Test（get/post ヘルパ・last_response でアプリを直接叩く）
 - [pitfalls.md](./pitfalls.md) … ハマり所＋Rails との使い分け
 
 > 関連: 同じRubyの本格版は [../rails/](../../rails/)。周辺インフラ（Redis等）は [../rails/周辺インフラ/](../../rails/周辺インフラ/) を流用。

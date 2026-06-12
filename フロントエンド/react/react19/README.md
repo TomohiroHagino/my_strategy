@@ -32,6 +32,9 @@
 - [routing.md](./routing.md) … ルーティング（React Router）とは
 - [data_fetching.md](./data_fetching.md) … データ取得（TanStack Query / SWR）とは
 - [testing.md](./testing.md) … テスト（Testing Library）とは
+- [testing_library.md](./testing_library.md) … React Testing Library（render / getByRole / userEvent）とは
+- [msw.md](./msw.md) … MSW（ネットワーク層でAPIモック）とは
+- [playwright.md](./playwright.md) … Playwright（実ブラウザE2E）とは
 - [pitfalls.md](./pitfalls.md) … 実務でハマる罠まとめ
 
 > 関連: Reactの上に乗るフルスタック版は [../nextjs/](../../nextjs/nextjs15/)（SSR・ルーティング等を内蔵）。

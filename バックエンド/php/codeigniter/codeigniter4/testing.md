@@ -103,5 +103,7 @@ vendor/bin/phpunit --coverage-html build/coverage   # カバレッジ（xdebug/p
 - **過剰なモック**：内部実装を縛りすぎるとリファクタで赤くなる「もろい」テストに。境界（外部API等）だけモックする。
 - **カバレッジ偏重**：数字（80%目安）だけ追って重要フローの Feature テストが無いのは本末転倒。`xdebug`/`pcov` 未導入だとカバレッジが出ない点にも注意。
 
+> **ライブラリ個別ファイルは作らない**：CI4 は **PHPUnit ＋ 組込の `CIUnitTestCase`**（＋ `FeatureTestTrait` / `DatabaseTestTrait` / `Fabricator`）で完結するため、追加ライブラリの解説ファイルは不要。上記の組込クラス・トレイトで Unit / Feature / Database / データ生成のすべてをまかなえる。
+
 ## 関連
 [models.md](./models.md) / [database_query_builder.md](./database_query_builder.md) / [config_env.md](./config_env.md) / [routing.md](./routing.md)

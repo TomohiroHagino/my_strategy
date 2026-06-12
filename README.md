@@ -1,7 +1,8 @@
-# プログラミング — 言語・フレームワーク知見リスト
+# エンジニア実務大全 — 作って動かして運用するための技術リファレンス
 
-自分が触れる言語・フレームワークを、**バックエンド / フロントエンド / モバイル / インフラ / DevOps**に分け、
-それぞれを実務リファレンスとしてまとめる個人ナレッジベース。
+自分が触れる **言語・フレームワークから、インフラ・運用(SRE)・DevOps まで**を、
+**バックエンド / フロントエンド / モバイル / インフラ / DevOps** の5分野に分けてまとめる、実務向けの個人ナレッジベース。
+（＝言語/FWだけでなく、コンテナ・IaC・障害対応・負荷検証・CI/CD など「作って動かして運用する」全体をカバー）
 
 ## 構成（全体の設計図）
 
@@ -54,6 +55,8 @@
 │           ├── README.md        ← Gin概要
 │           └── gin1/            ← Gin v1 実務リファレンス（フラッグシップ・完成）
 ├── フロントエンド/
+│   ├── README.md          ← フロントエンド索引（言語→ビルド→FW）
+│   ├── build_tools.md     ← ビルドツール（Vite/esbuild/Rollup/Turbopack）
 │   ├── javascript/      ✅ JavaScript（言語の概要）
 │   ├── typescript/      ✅ TypeScript（言語の概要）
 │   ├── react/           ✅ React
@@ -76,14 +79,23 @@
 │   │   └── swiftui/     ← SwiftUI / swiftui6（フラッグシップ・完成）
 │   └── kotlin/          ✅ Kotlin（＋ android_studio.md）
 │       └── compose/     ← Jetpack Compose / compose1（フラッグシップ・完成）
-├── インフラ/            ✅ クラウド〜運用まで（6本柱）
+├── インフラ/            ✅ クラウド〜運用まで（7本柱）
 │   ├── aws/             ← AWS（IAM/EC2/Lambda/S3/RDS/VPC/ECS/ECR… 完成）
 │   ├── gcp/             ← GCP（IAM/Compute/Cloud Run/GCS/BigQuery… 完成）
 │   ├── terraform/       ← IaC（state/modules… ＋ ECS構成の実例 完成）
+│   ├── webサーバ/       ← nginx/Apache 詳細（仕組み/nginx/apache/リバプロ/アプリサーバ/チューニング/セキュリティ/ログ/比較 完成）
 │   ├── docker/          ← コンテナ（Dockerfile/Compose/本番運用 完成）
 │   ├── 障害対応/         ← SRE（切り分け/対応判断フロー/復旧/ポストモーテム 完成）
 │   └── 負荷検証/         ← 性能（指標/k6/飽和点/チューニング 完成）
-└── DevOps/              ✅ 上を"つなぐ"上位レイヤ：CI/CD・デプロイ戦略・DORA 4 Keys・可観測性(SLO)・GitOps・品質ゲート・CALMS文化（完成）
+└── DevOps/              ✅ 上を"つなぐ"上位レイヤ（完成）
+    ├── ci_cd.md / ci_tools.md       ← CI/CD・GitHub Actions の例
+    ├── deploy_strategies.md         ← rolling / blue-green / canary / flag
+    ├── dora_metrics.md              ← DORA 4 Keys（デプロイ頻度/リードタイム/MTTR/変更失敗率）
+    ├── gitops.md                    ← GitOps（Argo CD / Flux）
+    ├── observability.md             ← 可観測性（metrics/logs/traces・SLI/SLO）
+    ├── automation_quality.md        ← 品質ゲート・シフトレフト
+    ├── culture.md                   ← CALMS・トランクベース・blameless
+    └── pitfalls.md                  ← 罠まとめ
 ```
 
 > モバイルは **Flutter / React Native / SwiftUI / Jetpack Compose** の4種を整備済み。

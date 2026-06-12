@@ -77,4 +77,4 @@ npx vitest run --coverage
 - **状態リーク**：モジュールスコープの可変状態（キャッシュ等）がテスト間で残る。`beforeEach` で初期化。
 
 ## 関連
-[routing.md](./routing.md)
+[vitest.md](./vitest.md) / [routing.md](./routing.md)

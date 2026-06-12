@@ -33,6 +33,11 @@
 - [config.md](./config.md) … 設定（nuxt.config / runtimeConfig / modules）とは
 - [seo_meta.md](./seo_meta.md) … SEO / メタ（useHead / useSeoMeta）とは
 - [deployment.md](./deployment.md) … デプロイ（Nitro presets）とは
+
+### テスト
+- [nuxt_test_utils.md](./nuxt_test_utils.md) … @nuxt/test-utils（mountSuspended / setup / Nuxt環境込み）とは
+- [playwright.md](./playwright.md) … Playwright（実ブラウザE2E）とは
+
 - [pitfalls.md](./pitfalls.md) … 実務でハマる罠まとめ
 
 ## 各ファイルの書式（テンプレ）

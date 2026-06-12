@@ -97,4 +97,4 @@ func TestValidation(t *testing.T) {
 - **グローバル状態の共有**：パッケージ変数のキャッシュ等が残り flaky に。各テストで初期化する。
 
 ## 関連
-[project_structure.md](./project_structure.md)
+[testify.md](./testify.md) / [project_structure.md](./project_structure.md)

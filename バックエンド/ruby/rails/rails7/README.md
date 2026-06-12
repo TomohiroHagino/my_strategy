@@ -63,6 +63,9 @@
 ### アセット・テスト・安全・運用
 - [assets.md](./assets.md) … アセット（importmap / Propshaft）とは
 - [testing.md](./testing.md) … テストとは（RSpec / FactoryBot / system spec）
+- [rspec.md](./rspec.md) … RSpec（describe / context / it / let / allow モック）
+- [factory_bot.md](./factory_bot.md) … FactoryBot（create / build / trait / association / sequence）
+- [capybara.md](./capybara.md) … Capybara（visit / click_on / fill_in / have_content / system spec）
 - [security.md](./security.md) … セキュリティとは（CSRF / XSS / SQLi）
 - [console.md](./console.md) … rails console / コマンドとは
 - [pitfalls.md](./pitfalls.md) … 実務でハマる罠まとめ（早見表）

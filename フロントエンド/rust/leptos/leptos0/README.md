@@ -30,6 +30,10 @@
 - [request_flow.md](./request_flow.md) … データの流れ（CSR：Signal→viewの一方向／SSR：server function→HTML）・各部分が何を返すか
 - [ssr_csr.md](./ssr_csr.md) … 描画モード（CSR / SSR / ハイドレーション）とは
 - [routing.md](./routing.md) … ルーティング（leptos_router）とは
+
+### テスト
+- [wasm_bindgen_test.md](./wasm_bindgen_test.md) … wasm-bindgen-test（ブラウザ/WASM上のDOMテスト）とは
+
 - [pitfalls.md](./pitfalls.md) … 実務でハマる罠まとめ
 
 ## 各ファイルの書式（テンプレ）

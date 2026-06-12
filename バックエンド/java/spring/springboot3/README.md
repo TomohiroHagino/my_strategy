@@ -75,6 +75,9 @@ Springは「Model」「View」という単一ファイルを持たない。**役
 
 ### テスト・罠
 - [testing.md](./testing.md) … テスト（JUnit5 / MockMvc / Testcontainers）とは
+- [junit5.md](./junit5.md) … JUnit 5（テスト実行基盤：@Test / @ParameterizedTest / @Nested）
+- [mockito.md](./mockito.md) … Mockito（依存のモック化：@Mock / when / verify / ArgumentCaptor）
+- [assertj.md](./assertj.md) … AssertJ（流暢なアサーション：assertThat / assertThatThrownBy）
 - [pitfalls.md](./pitfalls.md) … 実務でハマる罠まとめ（早見表）
 
 ## 各ファイルの書式（テンプレ）

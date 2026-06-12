@@ -52,6 +52,8 @@ Djangoは **MTV**。**「View」＝処理（他FWのコントローラ役）**�
 
 ### テスト・安全・運用
 - [testing.md](./testing.md) … テスト（pytest-django）とは
+  - [pytest.md](./pytest.md) … pytest / pytest-django（django_db・client・parametrize・conftest）とは
+  - [factory_boy.md](./factory_boy.md) … factory_boy（DjangoModelFactory・SubFactory・Faker・Sequence）とは
 - [security.md](./security.md) … セキュリティ（CSRF / XSS / SQLi）とは
 - [pitfalls.md](./pitfalls.md) … 実務でハマる罠まとめ（早見表）
 

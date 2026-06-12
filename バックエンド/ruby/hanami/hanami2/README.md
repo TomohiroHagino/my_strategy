@@ -32,6 +32,7 @@
 ### 設定・運用
 - [settings_config.md](./settings_config.md) … 設定（Hanami::Settings / dry-types）とは
 - [testing.md](./testing.md) … テスト（RSpec / コンテナからの取得）とは
+- [rspec.md](./rspec.md) … RSpec（既定テストFW：コンテナ取得 / container.stub による DI 差し替え / request spec）
 - [pitfalls.md](./pitfalls.md) … 実務でハマる罠まとめ（＋Rails との使い分け）
 
 ## 各ファイルの書式（テンプレ）

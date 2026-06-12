@@ -76,4 +76,4 @@ it('税込みを正しく計算する', function () {
 - **`create` の乱用で遅い**：保存不要なら `make()` / `make()->each()`。並列実行（`--parallel`）も併用して時間を抑える。
 
 ## 関連
-[database.md](./database.md) / [artisan.md](./artisan.md) / [controller.md](./controller.md)
+[pest.md](./pest.md) / [database.md](./database.md) / [artisan.md](./artisan.md) / [controller.md](./controller.md)

@@ -43,6 +43,7 @@
 - [config_settings.md](./config_settings.md) … 設定（pydantic-settings / .env）
 - [error_handling.md](./error_handling.md) … 例外処理（HTTPException / ハンドラ）
 - [testing.md](./testing.md) … テスト（TestClient / pytest）
+  - [pytest.md](./pytest.md) … pytest（TestClient併用・fixture・parametrize・httpx.AsyncClient）とは
 - [pitfalls.md](./pitfalls.md) … 実務でハマる罠まとめ
 
 > 関連: 同じPythonのフルスタック版は [../django/](../../django/)。環境管理は [../環境管理.md](../../環境管理.md)。

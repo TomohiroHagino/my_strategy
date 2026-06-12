@@ -39,6 +39,8 @@
 - [config_env.md](./config_env.md) … 設定（dotenv / process.env）とは
 - [templating.md](./templating.md) … テンプレート（res.render / EJS）※API主体なら任意
 - [testing.md](./testing.md) … テスト（Jest / Vitest ＋ supertest）とは
+  - [vitest.md](./vitest.md) … Vitest（describe/it/expect・vi.mock・vi.fn）とは
+  - [supertest.md](./supertest.md) … supertest（request(app).get('/').expect(200)）とは
 - [pitfalls.md](./pitfalls.md) … 実務でハマる罠まとめ
 
 ## 各ファイルの書式（テンプレ）

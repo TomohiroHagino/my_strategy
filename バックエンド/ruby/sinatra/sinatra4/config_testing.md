@@ -136,6 +136,7 @@ end
 - 環境は `RACK_ENV` 駆動。test 環境はアプリ読み込み前に必ず指定。
 
 ## 関連
+- Rack::Test の詳細（get/post ヘルパ・last_response）：[rack_test.md](./rack_test.md)
 - フィルタ・ミドルウェア・Rackの土台：[rack_and_filters.md](./rack_and_filters.md)
 - 始め方（classic / modular）：[getting_started.md](./getting_started.md)
 - ハマり所早見表：[pitfalls.md](./pitfalls.md)

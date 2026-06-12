@@ -74,4 +74,4 @@ Hanami.app.container.enable_stubs!
 - **過剰なモック**：境界（外部API・リポジトリ）だけ差し替える。ロジック内部まで縛るとリファクタで赤くなる。
 
 ## 関連
-[dependency_injection.md](./dependency_injection.md) / [settings_config.md](./settings_config.md) / [actions.md](./actions.md)
+[rspec.md](./rspec.md) / [dependency_injection.md](./dependency_injection.md) / [settings_config.md](./settings_config.md) / [actions.md](./actions.md)

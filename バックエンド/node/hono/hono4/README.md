@@ -35,6 +35,7 @@
 - [auth.md](./auth.md) … 認証（jwt / bearer ミドルウェア）とは
 - [database.md](./database.md) … DB（Drizzle / Prisma / D1、内蔵なし）とは
 - [testing.md](./testing.md) … テスト（app.request / Vitest）とは
+  - [vitest.md](./vitest.md) … Vitest（app.request 組込クライアント・vi.mock・c.env モック）とは
 - [pitfalls.md](./pitfalls.md) … 実務でハマる罠まとめ
 
 ## 各ファイルの書式（テンプレ）

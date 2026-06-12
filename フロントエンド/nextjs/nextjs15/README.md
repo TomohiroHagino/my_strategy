@@ -39,6 +39,11 @@
 - [edge_runtime.md](./edge_runtime.md) … Edge Runtime（エッジサーバー）とは
 - [metadata_seo.md](./metadata_seo.md) … メタデータ / SEO とは
 - [deployment.md](./deployment.md) … デプロイ（Vercel / 環境変数）とは
+
+### テスト
+- [testing_library.md](./testing_library.md) … React Testing Library（Client/Server Componentの注意点）とは
+- [playwright.md](./playwright.md) … Playwright（App RouterページのE2E）とは
+
 - [pitfalls.md](./pitfalls.md) … 実務でハマる罠まとめ
 
 ## 各ファイルの書式（テンプレ）

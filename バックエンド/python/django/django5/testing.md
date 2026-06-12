@@ -80,4 +80,4 @@ class ArticleFactory(factory.django.DjangoModelFactory):
 - カバレッジ数値だけ追って**重要フローの結合テストが無い**のは本末転倒。
 
 ## 関連
-[models.md](./models.md) / [orm_queries.md](./orm_queries.md) / [views.md](./views.md) / [auth.md](./auth.md)
+[pytest.md](./pytest.md) / [factory_boy.md](./factory_boy.md) / [models.md](./models.md) / [orm_queries.md](./orm_queries.md) / [views.md](./views.md) / [auth.md](./auth.md)

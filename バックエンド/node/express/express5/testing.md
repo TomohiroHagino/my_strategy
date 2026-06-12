@@ -78,4 +78,4 @@ test("合計を計算する", () => {
 - **`app.listen` の戻り（server）を閉じ忘れ**：実サーバを起動する E2E では `afterAll(() => server.close())` を忘れるとプロセスが終わらない。
 
 ## 関連
-[project_structure.md](./project_structure.md) / [request_response.md](./request_response.md) / [config_env.md](./config_env.md)
+[vitest.md](./vitest.md) / [supertest.md](./supertest.md) / [project_structure.md](./project_structure.md) / [request_response.md](./request_response.md) / [config_env.md](./config_env.md)

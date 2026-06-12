@@ -30,6 +30,7 @@
 - [auth.md](./auth.md) … 認証（JWT / セッション）とは
 - [config_env.md](./config_env.md) … 設定（env / viper）とは
 - [testing.md](./testing.md) … テスト（httptest）とは
+  - [testify.md](./testify.md) … testify（assert/require・suite・mock）とは
 - [pitfalls.md](./pitfalls.md) … 実務でハマる罠まとめ
 
 ## 各ファイルの書式（テンプレ）

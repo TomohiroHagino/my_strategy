@@ -50,6 +50,7 @@
 - [artisan.md](./artisan.md) … Artisan / Tinker とは
 - [assets.md](./assets.md) … アセット（Vite）とは
 - [testing.md](./testing.md) … テスト（Pest / PHPUnit）とは
+  - [pest.md](./pest.md) … Pest（it/test・expect・datasets・Laravelプラグイン）とは
 - [security.md](./security.md) … セキュリティ（CSRF / mass assignment / XSS / SQLi）とは
 - [pitfalls.md](./pitfalls.md) … 実務でハマる罠まとめ（早見表）
 
