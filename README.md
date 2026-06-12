@@ -1,7 +1,7 @@
 # プログラミング — 言語・フレームワーク特徴まとめ
 
-自分が触れる言語・フレームワークを、**バックエンド / フロントエンド / インフラ**に分け、
-それぞれ「特徴」と「どういう使い方をするのか」を1ファイルにまとめる個人リファレンス。
+自分が触れる言語・フレームワークを、**バックエンド / フロントエンド / モバイル / インフラ / DevOps**に分け、
+それぞれを実務リファレンスとしてまとめる個人ナレッジベース。
 
 ## 構成（全体の設計図）
 
@@ -59,7 +59,8 @@
 │   ├── react/           ✅ React
 │   │   └── react19/     ← React 18/19 実務リファレンス（フラッグシップ・完成）
 │   ├── nextjs/          ✅ Next.js
-│   │   └── nextjs15/    ← Next.js 15 実務リファレンス（フラッグシップ・完成）
+│   │   ├── nextjs15/    ← Next.js 15（App Router）実務リファレンス（完成）
+│   │   └── nextjs12/    ← Next.js 12（Pages Router）実務リファレンス（完成）
 │   ├── vue/             ✅ Vue
 │   │   └── vue3/        ← Vue 3 実務リファレンス（フラッグシップ・完成）
 │   ├── nuxt/            ✅ Nuxt
@@ -75,14 +76,18 @@
 │   │   └── swiftui/     ← SwiftUI / swiftui6（フラッグシップ・完成）
 │   └── kotlin/          ✅ Kotlin（＋ android_studio.md）
 │       └── compose/     ← Jetpack Compose / compose1（フラッグシップ・完成）
-├── インフラ/            ✅ クラウド（README＝AWS/GCP対応表）
-│   ├── aws/             ← AWS 実務リファレンス（IAM/EC2/Lambda/S3/RDS/DynamoDB/VPC… 完成）
-│   └── gcp/             ← GCP 実務リファレンス（IAM/Compute/Cloud Run/GCS/BigQuery… 完成）
-└── DevOps/              ✅ 既存の docker/terraform/aws/障害対応/負荷検証 を"つなぐ"上位レイヤ。CI/CD・デプロイ戦略(rolling/blue-green/canary/flag)・DORA 4 Keys・可観測性(SLI/SLO)・GitOps・品質ゲート・CALMS文化（コード→CI→CD→運用→計測のループ）
+├── インフラ/            ✅ クラウド〜運用まで（6本柱）
+│   ├── aws/             ← AWS（IAM/EC2/Lambda/S3/RDS/VPC/ECS/ECR… 完成）
+│   ├── gcp/             ← GCP（IAM/Compute/Cloud Run/GCS/BigQuery… 完成）
+│   ├── terraform/       ← IaC（state/modules… ＋ ECS構成の実例 完成）
+│   ├── docker/          ← コンテナ（Dockerfile/Compose/本番運用 完成）
+│   ├── 障害対応/         ← SRE（切り分け/対応判断フロー/復旧/ポストモーテム 完成）
+│   └── 負荷検証/         ← 性能（指標/k6/飽和点/チューニング 完成）
+└── DevOps/              ✅ 上を"つなぐ"上位レイヤ：CI/CD・デプロイ戦略・DORA 4 Keys・可観測性(SLO)・GitOps・品質ゲート・CALMS文化（完成）
 ```
 
-> モバイル系は独立した `モバイル/` フォルダに集約（Dart/Flutter ・ React Native）。
-> swift / kotlin（ネイティブ）は未着手。必要なら `モバイル/` 配下に追加できる。
+> モバイルは **Flutter / React Native / SwiftUI / Jetpack Compose** の4種を整備済み。
+> 各フレームワークには `getting_started.md`（深いフォルダツリー付き）と `request_flow.md`（リクエスト/処理の流れ・各層が何を返すか）を横断で用意。Rails は 4〜7、Next.js は App/Pages Router の複数版を独立管理。
 
 ## 各ファイルの書式（テンプレ）
 
