@@ -24,5 +24,6 @@ Apple の**静的型付け・安全志向**の言語。iOS / macOS / watchOS / v
 - 依存管理: Swift Package Manager (SPM) / CocoaPods
 
 ## このフォルダの構成
+- [解説/swift6.md](./解説/swift6.md) … **Swift 言語そのもの**の解説（最新版）。値型・Optional・プロトコル指向・actor/data race safety など。
 - [swiftui/](./swiftui/) … **SwiftUI**（現行の宣言的UIフレームワーク）のフラッグシップリファレンス。
 - [xcode.md](./xcode.md) … Apple の IDE「Xcode」とは（iOS開発の必須ツール）。

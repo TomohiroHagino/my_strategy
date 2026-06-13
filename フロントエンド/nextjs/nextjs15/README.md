@@ -20,6 +20,7 @@
 ## 項目（各ファイルへ）
 
 ### はじめに / ルーティング
+- [ハンズオン.md](./ハンズオン.md) … 【実習】0から作って動かす（create-next-app→page編集→Server Componentでfetch→ルート追加→"use client"を直す）
 - [getting_started.md](./getting_started.md) … 始め方（create-next-app / app構成）
 - [app_router.md](./app_router.md) … App Router（ファイルベースルーティング）とは
 - [routing.md](./routing.md) … 動的ルート / Link / ナビゲーションとは

@@ -24,4 +24,5 @@ Google の**静的型付け・クライアント最適化**言語。主用途は
 - テスト: `package:test`
 
 ## このフォルダの構成
+- [解説/dart3.5.md](./解説/dart3.5.md) … **Dart 言語そのもの**の解説（最新版）。文法・型・records/patterns・isolate など。
 - [flutter/](./flutter/) … **Flutter**（クロスプラットフォームUIフレームワーク）。フラッグシップの版別リファレンス。

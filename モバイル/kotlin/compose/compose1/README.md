@@ -12,6 +12,7 @@
 ## 項目（各ファイルへ）
 
 ### はじめに / UIの基本
+- [ハンズオン.md](./ハンズオン.md) … 【実習】Android Studioで環境構築→エミュレータで画面を出す→remember/mutableStateOf→LazyColumn（手を動かす1回目）
 - [getting_started.md](./getting_started.md) … 始め方（Android Studio / setContent / プレビュー）
 - [composables.md](./composables.md) … `@Composable`（関数・再コンポーズ）とは
 - [layout.md](./layout.md) … レイアウト（Column / Row / Box / Modifier）とは

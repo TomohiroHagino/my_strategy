@@ -21,6 +21,7 @@
 
 ### はじめに / MVC
 - [getting_started.md](./getting_started.md) … 始め方（composer / spark serve / 構成）
+- [ハンズオン.md](./ハンズオン.md) … 手を動かす実習（0からコントローラを1つ動かす／404・baseURLを直す）
 - [request_flow.md](./request_flow.md) … リクエストの流れ・各層は何を返すか（全体俯瞰）
 - [routing.md](./routing.md) … ルーティング（Routes / 自動ルーティング）とは
 - [controllers.md](./controllers.md) … コントローラとは

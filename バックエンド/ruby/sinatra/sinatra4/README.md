@@ -22,6 +22,7 @@
 > Sinatraは小さいので版フォルダは作らず、ここに直接ファイルを置く（Sinatra 3/4 系想定）。
 
 - [getting_started.md](./getting_started.md) … 始め方（gem / classic・modular / 起動）
+- [ハンズオン.md](./ハンズオン.md) … 手を動かす実習（0からAPIを1つ動かす／ポート競合・404を直す）
 - [request_flow.md](./request_flow.md) … リクエスト/処理の流れ・各層は何を返すか（全体像）
 - [routing.md](./routing.md) … ルーティングとは（get/post・パラメータ・ワイルドカード）
 - [request_response.md](./request_response.md) … リクエスト/レスポンス（params・halt・redirect・status）

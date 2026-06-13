@@ -12,6 +12,7 @@
 ## 項目（各ファイルへ）
 
 ### はじめに / 基礎
+- [ハンズオン.md](./ハンズオン.md) … 【実習】0から作って動かす（Vite作成→refでカウンタ→v-for一覧→fetchでAPI表示→.value取り違えを直す）
 - [getting_started.md](./getting_started.md) … 始め方（create-vue / SFC / mount）
 - [template_syntax.md](./template_syntax.md) … テンプレート構文（補間 / `:` / `@`）とは
 - [components.md](./components.md) … コンポーネント（SFC・親子）とは

@@ -22,6 +22,7 @@
 
 ### はじめに
 - [getting_started.md](./getting_started.md) … プロジェクトの始め方（`rails new`〜起動〜scaffold）
+- [ハンズオン.md](./ハンズオン.md) … 手を動かす実習（0からCRUDを1つ動かす／migrate忘れを直す）
 
 ### コア（MVC）
 - [request_flow.md](./request_flow.md) … リクエスト/処理の流れ・各層は何を返すか（全体像）

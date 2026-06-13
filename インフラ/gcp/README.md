@@ -12,6 +12,9 @@
 
 ## 項目（各ファイルへ）
 
+### 手を動かす（実習）
+- [ハンズオン.md](./ハンズオン.md) … **エミュレータで課金ゼロ**：Cloud Storage（fake-gcs）→ Firestore（CRUD）→失敗と修正（0から動く）
+
 ### 基礎 / 権限
 - [getting_started.md](./getting_started.md) … 始め方（プロジェクト / gcloud / 課金）
 - [iam.md](./iam.md) … IAM（メンバー / ロール / 最小権限）とは

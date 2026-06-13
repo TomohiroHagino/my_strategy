@@ -41,5 +41,5 @@
 - （現役として触った所感を後から追記）
 
 ## このフォルダの構成
+- [解説/java21.md](./解説/java21.md) … Java 21（LTS）の言語そのものの解説（文法・型・record/sealed/パターンマッチ・Virtual Threads）。
 - [spring/](./spring/) … Spring / Spring Boot（フレームワーク）。フラッグシップの版別リファレンス。
-  - （Java言語そのものの「○○とは」深掘りも、今後この `java/` 直下に切り出していける）

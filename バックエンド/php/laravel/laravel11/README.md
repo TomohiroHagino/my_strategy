@@ -21,6 +21,7 @@
 
 ### はじめに
 - [getting_started.md](./getting_started.md) … プロジェクトの始め方（composer / artisan serve / migrate）
+- [ハンズオン.md](./ハンズオン.md) … 手を動かす実習（0からJSONを返す／APP_KEY未設定・migrate前を直す）
 
 ### コア（MVC）
 - [request_flow.md](./request_flow.md) … リクエストの流れ・各層は何を返すか（全体俯瞰）

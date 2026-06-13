@@ -15,6 +15,7 @@
 
 ### はじめに / 構成
 - [getting_started.md](./getting_started.md) … 始め方（hanami new / server / console）
+- [ハンズオン.md](./ハンズオン.md) … 手を動かす実習（0からアクションを1つ動かす／登録漏れを直す）
 - [request_flow.md](./request_flow.md) … リクエスト/処理の流れ・各層は何を返すか（全体像）
 - [project_structure.md](./project_structure.md) … 構成（app / slices / コンテナ自動登録）とは
 - [routing.md](./routing.md) … ルーティング（config/routes.rb）とは

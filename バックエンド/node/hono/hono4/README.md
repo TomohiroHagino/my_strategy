@@ -19,6 +19,7 @@
 ## 項目（各ファイルへ）
 
 ### はじめに / コア
+- [ハンズオン.md](./ハンズオン.md) … 【実習】0から手を動かして1回成功する（create hono→npm run dev→c.json()→app.request()で確認）
 - [getting_started.md](./getting_started.md) … 始め方（create hono / ランタイム / serve）
 - [request_flow.md](./request_flow.md) … リクエストの流れ・各層は何を返すか（全体俯瞰）
 - [routing.md](./routing.md) … ルーティング（app.get / パラメータ / グループ / チェーン）とは

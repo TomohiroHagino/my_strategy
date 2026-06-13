@@ -12,6 +12,9 @@
 
 ## 項目（各ファイルへ）
 
+### 手を動かす（実習）
+- [ハンズオン.md](./ハンズオン.md) … **LocalStackで課金ゼロ**：S3バケット作成→put/get→DynamoDB→失敗と修正（0から動く）
+
 ### 基礎 / 権限
 - [getting_started.md](./getting_started.md) … 始め方（アカウント / リージョン / CLI / 課金アラート）
 - [iam.md](./iam.md) … IAM（ユーザー / ロール / ポリシー / 最小権限）とは

@@ -12,6 +12,7 @@
 ## 項目（各ファイルへ）
 
 ### はじめに / 基礎
+- [ハンズオン.md](./ハンズオン.md) … 【実習】0から作って動かす（wasm32+trunk導入→最小アプリ→trunk serve→signalカウンタ→wasmターゲット未追加を直す）※Rust前提
 - [getting_started.md](./getting_started.md) … 始め方（cargo / trunk / cargo-leptos）
 - [components.md](./components.md) … コンポーネント（`#[component]`）とは
 - [view_macro.md](./view_macro.md) … `view!` マクロ（テンプレート・イベント）とは

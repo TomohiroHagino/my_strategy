@@ -16,6 +16,7 @@
 ## 項目（各ファイルへ）
 
 ### はじめに / ルーティング
+- [ハンズオン.md](./ハンズオン.md) … 【実習】0から作って動かす（nuxi init→pages/でルーティング→useFetchでAPI表示→NuxtPage忘れを直す）
 - [getting_started.md](./getting_started.md) … 始め方（nuxi init / ディレクトリ構成）
 - [pages_routing.md](./pages_routing.md) … ページ / ファイルベースルーティングとは
 - [components_autoimport.md](./components_autoimport.md) … 自動インポート（components / composables）とは

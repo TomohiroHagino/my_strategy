@@ -12,6 +12,7 @@
 ## 項目（各ファイルへ）
 
 ### はじめに / 基礎
+- [ハンズオン.md](./ハンズオン.md) … 【実習】0から作って動かす（Vite作成→カウンタ→fetchでAPI表示→key警告を直す）
 - [getting_started.md](./getting_started.md) … 始め方（Vite / コンポーネント / 起動）
 - [components_jsx.md](./components_jsx.md) … コンポーネントと JSX とは
 - [props.md](./props.md) … props（親→子のデータ）とは

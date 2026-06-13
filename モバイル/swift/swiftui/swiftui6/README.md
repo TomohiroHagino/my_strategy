@@ -12,6 +12,7 @@
 ## 項目（各ファイルへ）
 
 ### はじめに / UIの基本
+- [ハンズオン.md](./ハンズオン.md) … 【実習】Xcodeで環境構築→シミュレータで画面を出す→@State→List（手を動かす1回目／macOS必須）
 - [getting_started.md](./getting_started.md) … 始め方（Xcodeプロジェクト / @main App / プレビュー）
 - [views.md](./views.md) … View（`struct` / `body` / 合成）とは
 - [layout.md](./layout.md) … レイアウト（VStack / HStack / ZStack / frame）とは

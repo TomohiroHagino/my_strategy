@@ -33,5 +33,6 @@
 - ビルド: Vite / esbuild
 
 ## このフォルダの構成
-- 現状はこの概要README。中核概念（DOM/非同期/モジュール等）の「○○とは」深掘りは今後ここに切り出していく。
+- [解説/es2024.md](./解説/es2024.md) … JavaScript（ES2024）の言語そのものの解説（文法・プロトタイプ・クロージャ・Promise/async・イベントループ・Object.groupBy/Promise.withResolvers/正規表現vフラグ）。
+- 中核概念（DOM/非同期/モジュール等）のさらなる深掘りは今後ここに切り出していく。
 - **実務では TypeScript 前提が主流**なので、型は [../typescript/](../typescript/) を参照。

@@ -23,6 +23,7 @@
 > FastAPIは 0.x 系で大きな版断絶が無いため、版フォルダは作らずここに直接置く（Python 3.9+ 想定）。
 
 ### はじめに / コア
+- [ハンズオン.md](./ハンズオン.md) … 【実習】0から手を動かして1回成功する（uvicorn起動→/docsで叩く→Pydanticで422を体験）
 - [getting_started.md](./getting_started.md) … 始め方（pip / uvicorn / 自動ドキュメント）
 - [request_flow.md](./request_flow.md) … リクエストの流れ・各層は何を返すか（全体俯瞰）
 - [routing.md](./routing.md) … パスオペレーション（ルーティング・path/query パラメータ）

@@ -14,6 +14,7 @@
 ## 項目（各ファイルへ）
 
 ### はじめに / UIの基本
+- [ハンズオン.md](./ハンズオン.md) … 【実習】Expoで環境構築→`expo start`で画面を出す→useState→FlatList（手を動かす1回目）
 - [getting_started.md](./getting_started.md) … 始め方（Expo / CLI / 実行）
 - [core_components.md](./core_components.md) … コアコンポーネント（View / Text / Image / ScrollView）とは
 - [styling.md](./styling.md) … スタイル（StyleSheet / flexbox）とは

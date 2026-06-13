@@ -42,6 +42,7 @@ Springは「Model」「View」という単一ファイルを持たない。**役
 ## 項目（各ファイルへ）
 
 ### はじめに
+- [ハンズオン.md](./ハンズオン.md) … 【実習】0から手を動かして1回成功する（Initializr→mvnw起動→@RestControllerで/hello→curl）
 - [getting_started.md](./getting_started.md) … プロジェクトの始め方（Spring Initializr / 起動）
 - [project_structure.md](./project_structure.md) … レイヤード構成（Controller/Service/Repository）とは
 - [model.md](./model.md) … モデルとは（Springでの“モデル”の地図＝Entity/Repository/Service への分割）

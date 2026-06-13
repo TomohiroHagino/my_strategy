@@ -27,5 +27,5 @@ Google が作った**静的型付けのコンパイル言語**。シンプル・
 - ORM: GORM / sqlx
 
 ## このフォルダの構成
+- [解説/go1.23.md](./解説/go1.23.md) … Go 1.23 の言語そのものの解説（文法・型・interface・goroutine/channel・range-over-func）。
 - [gin/](./gin/) … **Gin**（Go で最も定番の軽量Webフレームワーク）。フラッグシップの版別リファレンス。
-  - （Go言語そのものの「goroutine / channel / interface」等の深掘りも、今後この `go/` 直下に切り出せる）

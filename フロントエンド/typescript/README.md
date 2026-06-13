@@ -33,4 +33,5 @@
 - 土台: [../javascript/](../javascript/)、UI: [../react/](../react/) / [../vue/](../vue/)
 
 ## このフォルダの構成
-- 現状はこの概要README。型システムの各概念（ジェネリクス・ナローイング・ユーティリティ型等）の深掘りは今後ここに切り出す。
+- [解説/typescript5.md](./解説/typescript5.md) … TypeScript 5.x の言語そのものの解説（構造的型付け・ジェネリクス・条件型/mapped types・const型パラメータ・using/Disposable・デコレータ）。
+- 型システムの各概念（ジェネリクス・ナローイング・ユーティリティ型等）のさらなる深掘りは今後ここに切り出す。

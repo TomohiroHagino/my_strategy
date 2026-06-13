@@ -22,6 +22,7 @@ Djangoは **MTV**。**「View」＝処理（他FWのコントローラ役）**�
 ## 項目（各ファイルへ）
 
 ### はじめに
+- [ハンズオン.md](./ハンズオン.md) … 【実習】0から手を動かして1回成功する（startproject→モデル→migrate→admin→ビュー表示）
 - [getting_started.md](./getting_started.md) … プロジェクトの始め方（startproject / runserver / migrate）
 - [project_apps.md](./project_apps.md) … project と app の構造とは
 

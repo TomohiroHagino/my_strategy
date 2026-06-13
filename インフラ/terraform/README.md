@@ -25,6 +25,9 @@
 
 ## 項目（各ファイルへ）
 
+### 手を動かす（実習）
+- [ハンズオン.md](./ハンズオン.md) … **LocalStack＋tflocalで課金ゼロ**：S3を`init`→`plan`→`apply`→`awslocal s3 ls`→`destroy`（Stateを体験）
+
 ### 基礎 / 始め方
 - [getting_started.md](./getting_started.md) … 始め方（インストール / `init`→`plan`→`apply` / フォルダ構成）
 - [example_aws_ecs.md](./example_aws_ecs.md) … **実例：AWS ECS構成のファイル分割**（main/variables/outputs/vpc/ecr/ecs/rds/s3.tf を解説）

@@ -13,6 +13,7 @@
 ## 項目（各ファイルへ）
 
 ### はじめに / コア
+- [ハンズオン.md](./ハンズオン.md) … 【実習】0から手を動かして1回成功する（go mod init→go run .→c.JSON()→:idパラメータ）
 - [getting_started.md](./getting_started.md) … 始め方（go mod / gin.Default / Run）
 - [request_flow.md](./request_flow.md) … リクエストの流れ・各層は何を返すか（全体俯瞰）
 - [project_structure.md](./project_structure.md) … プロジェクト構成（handler/service/repository）とは
