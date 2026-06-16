@@ -29,6 +29,7 @@
 - **helmet / CORS 未設定**：素の Express はセキュリティヘッダも CORS 制御も無い。`helmet()` でヘッダ付与、`cors()` でオリジン制御、レート制限も入れる。→ [security.md](./security.md)
 - **`.env` をコミット**：DB パスワードや API キー入りの `.env` を Git に上げる事故。`.gitignore` 必須、漏れたら即ローテート。→ [config_env.md](./config_env.md)
 - **DB 内蔵なし＝自分で選ぶ**：Express に ORM/DB は無い。Prisma / Sequelize / Mongoose 等を自分で選定・接続管理する（接続プール・切断処理も自前）。→ [database.md](./database.md)
+- **N+1 とORM特有の罠**：ループ内クエリの N+1 は Prisma `include`/Mongoose `populate` で解消。加えて **`PrismaClient` の多重生成で接続プール枯渇**（特にサーバレス→シングルトン必須）、ページング無し `findMany` の全件取得に注意。→ [database.md](./database.md)
 
 ## 関連
 [middleware.md](./middleware.md) / [routing.md](./routing.md) / [async_patterns.md](./async_patterns.md) / [request_response.md](./request_response.md) / [error_handling.md](./error_handling.md) / [project_structure.md](./project_structure.md) / [security.md](./security.md) / [config_env.md](./config_env.md) / [database.md](./database.md)

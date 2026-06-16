@@ -21,5 +21,6 @@
 ## このフォルダの構成
 - [react_native0/](./react_native0/) … **React Native 実務リファレンス（フラッグシップ）**。始め方〜コアコンポーネント〜スタイル〜ナビゲーション〜ネイティブ連携〜テスト〜罠まで、項目=1ファイル。
   - ※ RN は 0.x 系。フォルダ名 `react_native0` はメジャー番号0（rails7 等と同じ命名規則）。
+- [落とし穴.md](./落とし穴.md) … **JS/TSの仕組みがhooks/モバイル文脈でどう牙を剥くか**（stale closure・非同期setState・依存配列ミス・アンマウント後setState・ブリッジのシリアライズ制約・浮動小数/型・FlatList性能）。JS共通は [../../フロントエンド/javascript/落とし穴.md](../../フロントエンド/javascript/落とし穴.md)、RN/React固有は [react_native0/pitfalls.md](./react_native0/pitfalls.md)。
 
 > 前提: **React の基礎**（components / hooks / state）は [../../フロントエンド/react/react19/](../../フロントエンド/react/react19/) を参照。RNはそこにネイティブ向けの差分を足したもの。

@@ -28,4 +28,5 @@
 
 ## このフォルダの構成
 - [express/](./express/) … Express（定番の軽量Webフレームワーク）。フラッグシップの版別リファレンス。
-  - （Node/JS そのものの「イベントループ」「ESM/CJS」等の深掘りも、今後この `node/` 直下に切り出せる）
+- [hono/](./hono/) … Hono（マルチランタイム・Edge）。フラッグシップの版別リファレンス。
+- [落とし穴.md](./落とし穴.md) … **Node特有の現象と対策カタログ**（イベントループ遮断・未処理reject/クラッシュ・CJS/ESM・ストリームのバックプレッシャ・error-firstコールバック地獄・EventEmitterリーク・nextTick/setImmediate・cluster/Worker・環境変数/秘密）。JS共通の罠は [../../フロントエンド/javascript/落とし穴.md](../../フロントエンド/javascript/落とし穴.md)。

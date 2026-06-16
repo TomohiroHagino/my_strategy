@@ -28,6 +28,7 @@
 
 ## DB
 - **DBは内蔵なし・Edge対応を選ぶ**：HonoにDB機能は無い。ORM/ドライバは自前選定で、Edgeで動くもの（Drizzle+D1 / Hyperdrive / serverless接続）を選ぶ。従来型プールはEdgeで枯渇する。→ [database.md](./database.md)
+- **N+1 はEdgeで致命的**：Workersは1リクエストのクエリ回数/CPU時間に上限があり、N+1で上限超過しやすい。Drizzleの Relational Queries（`with`）でまとめ取り、複数書き込みは `db.batch()` で集約。→ [database.md](./database.md)
 
 ## 関連
 [middleware.md](./middleware.md) / [rpc.md](./rpc.md) / [context.md](./context.md) / [runtimes.md](./runtimes.md) / [validation.md](./validation.md) / [error_handling.md](./error_handling.md) / [database.md](./database.md)

@@ -110,4 +110,18 @@ List<Post> findByAuthorActiveTrue();
 - **`LazyInitializationException`**：トランザクション/セッションが閉じた後に LAZY 関連へアクセスすると発生。**取得時に fetch しておく**か、サービス層（トランザクション内）でDTOに詰め替える。
 - **import間違い**：`javax.persistence.*` のままだとBoot3で動かない。必ず `jakarta.persistence.*`。
 
+## JPA/Hibernate 特有の現象と対策（N+1以外）
+ORMが「永続性コンテキスト（一次キャッシュ）＋自動flush＋プロキシ」で動くゆえの、独特な現象群。
+| 現象 | なぜ起きる | 対策 |
+|---|---|---|
+| **`LazyInitializationException`** | トランザクション/セッション終了後に LAZY 関連へアクセス（プロキシが初期化できない） | Service内（`@Transactional`）で必要分を **fetch join / `@EntityGraph`**、または**DTOに詰め替えてから**返す。`open-in-view` で隠れる弊害に注意（下記） |
+| `open-in-view` がN+1/Lazyを隠す | Boot既定で**有効**。View層まで永続性コンテキストが開き、遅延ロードがそこで効いてしまう | 本番は `spring.jpa.open-in-view=false`。Service内で必要分をfetchする設計に矯正 |
+| **`MultipleBagFetchException`** | `List` 型コレクションを**2つ以上 fetch join** すると発生（Bag＝重複ありListの直積が定義不能） | コレクションを `Set` 化、またはクエリを分割（1つずつfetch）、または `@BatchSize` でIN取得 |
+| ページング＋fetch join で全件メモリ展開 | コレクション fetch join ＋ `Pageable` は `HHH000104` 警告＋**メモリ内ページング**（全件取得して切り出す） | `@EntityGraph`＋`Pageable`、または「**まずIDをページング取得 → そのIDで本体をfetch**」の2段構え |
+| 意図しないUPDATEが飛ぶ（ダーティチェック） | 永続化コンテキスト管理下のエンティティのフィールドを変えると、明示saveなしでも**commit時に自動flush＝UPDATE** | 読み取りは `@Transactional(readOnly = true)`、参照だけのエンティティは変更しない/detach |
+| 一次キャッシュで古い値 | 同一トランザクション内では同じIDは**同一インスタンス**を返す（identity map）。他で更新しても見えない | 必要なら `EntityManager.refresh(entity)`、トランザクション境界を見直す |
+| `@Transactional` が効かない | **同一クラス内のメソッド呼び出し**はSpringプロキシを通らず、トランザクション/AOPが適用されない（自己呼び出し問題） | トランザクション境界のメソッドを**別Beanに分離**して呼ぶ |
+| flush順序・タイミングの混乱 | flushは「クエリ実行直前」や「commit時」に走る。挿入順とSQL発行順がずれて制約違反に見える | 明示が要る所は `saveAndFlush`。バッチは `flush()`＋`clear()` でメモリ解放 |
+| 更新不要なのにエンティティを全ロード | 一覧/参照用にエンティティを取ると関連・全列を抱える | **DTO射影**（コンストラクタ式 `new ...DTO(...)` / インターフェース射影）で必要列だけ取得（読み取り最適化） |
+
 ## 関連: [repository.md](./repository.md) / [dto.md](./dto.md)

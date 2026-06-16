@@ -73,13 +73,23 @@ Post.pluck(:id)         # 必要な列だけ配列で
 Post.find_each { |p| ... }   # 大量データはバッチで
 ```
 
-## N+1問題とは
+## N+1問題とは（最頻の性能バグ）
 一覧表示で関連を1件ずつ引き、SQLが `1 + N` 回走る性能劣化。
 ```ruby
-# NG: posts.each { |p| p.user.name } で N+1
+# NG: posts.each { |p| p.user.name } で N+1（posts 1回 + 各userごとに +1）
 @posts = Post.includes(:user)   # OK: まとめて読む
 ```
-- 検出は **bullet** gem。7では `strict_loading` で遅延ロードを禁止して炙り出すことも。
+**対策の選択肢（使い分けが肝）**:
+- **`includes(:user)`** … 状況に応じて preload / eager_load を自動選択。まず第一手。
+- **`preload(:user)`** … 常に**別クエリ2回**（`SELECT posts` ＋ `SELECT users WHERE id IN (...)`）。JOINしたくない時。
+- **`eager_load(:user)`** … **LEFT JOIN で1クエリ**。関連を `where` 条件に使う一覧で有効。
+- **`joins(:comments)`** … INNER JOIN で**絞り込みだけ**（関連オブジェクトはロードしない）。件数や存在で絞る用途。
+```ruby
+# where で関連を条件にするなら eager_load / references が要る（includes 単体だと参照エラー）
+Post.includes(:user).where(users: { active: true }).references(:users)
+Post.eager_load(:user).where(users: { active: true })   # こちらは references 不要
+```
+- **検出**：**bullet** gem（不要/不足の eager load を警告）。`strict_loading`（`Post.strict_loading.find ...` やモデルに `self.strict_loading_by_default = true`）で**遅延ロードを例外化して強制検出**。ログのSQL回数も確認。
 
 ## トランザクション / ロックとは
 ```ruby
@@ -95,13 +105,22 @@ end
 - **`load_async`**：非同期クエリで複数クエリを並行発行し待ち時間短縮。
 - 7.1：**複合主キー**サポート。
 
-## ハマりどころ / アンチパターン
-- **N+1**（最頻）→ `includes`。
-- **`save` と `save!`**：前者は失敗を `false` で返すだけ。握り潰し注意。
-- **`default_scope`** の副作用 → 予期せぬ絞り込み。基本使わない。
-- **`insert_all`/`upsert_all`** はバリデーション・コールバックを通さない。
-- **time zone**：`Time.now` でなく `Time.current` / `Time.zone.now`。
-- マイグレーションとモデルの不整合（カラム消したのにコード参照が残る）。
+## ActiveRecord 特有の現象と対策（N+1以外）
+| 現象 / 罠 | なぜ起きる | 対策 |
+|---|---|---|
+| `count` / `size` / `length` の取り違え | `count` は毎回 `SELECT COUNT` を発行、`size` はロード済みなら配列長・未ロードならCOUNT、`length` は**必ず全件ロード**してから数える | 一覧描画後に件数を見るなら **`size`**。単に件数だけなら `count`。`length` は全件ロード覚悟の時だけ |
+| 関連件数で COUNT 乱発 / N+1 | `post.comments.count` を一覧ループで呼ぶと件数クエリがN回 | **`counter_cache`**（`belongs_to :post, counter_cache: true` ＋ `posts.comments_count` カラム）で1カラム参照に |
+| 大量データでメモリ枯渇 | `Post.all.each` は全件を一度にメモリ展開 | **`find_each` / `in_batches`**（既定1000件ずつ）で分割ロード |
+| 不要な全カラム・全オブジェクト生成 | `Post.all` は全列でモデルを生成 | 必要な値だけなら **`pluck(:id, :name)`**（配列）/ **`select(:id, :name)`**（軽量モデル） |
+| `update_all` / `delete_all` で整合崩れ | これらは**バリデーション・コールバック・`updated_at` をスキップ**して直接SQL | 副作用が要るなら1件ずつ `update`/`destroy`。スキップは承知の上で使う |
+| `default_scope` の副作用 | 全クエリに暗黙で効き、予期せぬ絞り込み・並び順が混入。外すには `unscoped` が必要 | 基本使わない。絞りは名前付き `scope` で明示的に |
+| インデックス欠如で遅い | 外部キー・検索/並び替えカラムに index が無いと全表スキャン | `add_index`（外部キー・`where`/`order` 対象列）。`bin/rails db:migrate` を忘れない |
+| 存在確認が重い | `Post.where(...).present?` は全件ロードして判定 | **`exists?`**（`SELECT 1 LIMIT 1` 相当で軽い） |
+| `save`/`save!` の握り潰し | `save` は失敗を `false` で返すだけ（例外を投げない） | 失敗を確実に検知したい所は **`save!`**（例外）。`false` を無視しない |
+| `insert_all`/`upsert_all` | 一括INSERTだが**バリデーション・コールバックを通さない** | 制約はDB側にも持たせる。アプリ検証が要るなら通常の生成を |
+| コネクションプール枯渇 | Puma のスレッド数と `database.yml` の `pool` が不一致だと `ConnectionTimeoutError` | `pool` ≥ スレッド数に合わせる |
+| タイムゾーンずれ | `Time.now` はサーバTZ依存 | **`Time.current` / `Time.zone.now`**、DBは UTC 保存 |
+| `after_commit` のタイミング | トランザクション内の `after_save` 時点ではまだコミット前 | 外部通知・ジョブ投入は **`after_commit`** で（コミット確定後） |
 
 ## 関連
 [model.md](./model.md) / [controller.md](./controller.md)

@@ -18,6 +18,7 @@
 
 ## データベース
 - **DBは内蔵なし**：Gin に ORM/DB層は無い。GORM や sqlx を自分で組み込み、接続・マイグレーション・トランザクションを管理する。→ [database.md](./database.md)
+- **N+1 と GORM 特有の罠**：関連を都度引く N+1 は `Preload`/`Joins` で解消。加えて GORM は **ゼロ値が `Updates` で無視される**・**ソフトデリート(`gorm.DeletedAt`)で自動除外**・**`Find` は未発見でもエラーにならない**等の独特な挙動がある。→ [database.md](./database.md)
 
 ## 並行処理 / Context
 - **goroutine には `c.Copy()`**：リクエスト処理後に `*gin.Context` は再利用/無効化される。非同期処理へ渡すなら `cCp := c.Copy()` のコピーを使う。元の `c` を goroutine で触ると競合/パニック。→ [context.md](./context.md)

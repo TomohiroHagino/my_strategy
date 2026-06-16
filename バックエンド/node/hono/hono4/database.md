@@ -68,6 +68,18 @@ app.get('/posts', async (c) => c.json(await prisma.post.findMany()))
 - **環境変数 / バインディングの注入**：D1は `c.env.DB`、接続文字列は `c.env.DATABASE_URL` のように **Context経由**で受け取り、`process.env` 直参照は避ける（移植性のため）。
 - **マイグレーションはツールで**：drizzle-kit / prisma migrate / wrangler d1 migrations を使い、手書きSQLの当て込みを避ける。
 
+## N+1 と Edge 特有の現象・対策
+Edgeランタイム（Workers等）は**1リクエストあたりのクエリ回数・実行時間に上限**があり、N+1は通常のサーバより致命的になりやすい。
+| 現象 | なぜ起きる | 対策 |
+|---|---|---|
+| **N+1** | ループ内で関連を都度引く | Drizzle の **Relational Queries** `db.query.users.findMany({ with: { posts: true } })` で関連をまとめ取り。生クエリは JOIN か **`inArray(col, ids)`** でIN取得 |
+| **D1のクエリ回数/サブリクエスト上限超過** | Workersは1リクエストで実行できるD1クエリ数・CPU時間に制限。N+1や大量クエリで上限に達する | クエリ数を減らす（まとめ取り）。複数の書き込みは **`db.batch([...])`**（D1）で1往復に集約 |
+| **リクエスト毎インスタンス必須** | Workersはリクエストごとに隔離。グローバルな接続プールを持てない | `drizzle(c.env.DB)` は**ハンドラ内で生成**（モジュールトップ生成は不可） |
+| **Edge非対応ドライバ** | TCPプール前提の生 `pg` 等はEdgeで動かない/枯渇 | **HTTPベース**を使う（D1 / Hyperdrive / Neon serverless / Prisma Accelerate） |
+| **長時間トランザクション** | D1等はロック保持・長時間Txに不向き | トランザクションは短く。原子性は `db.batch()` で確保 |
+| 繰り返しクエリのオーバーヘッド | 毎回プランを組む | Drizzle の **`.prepare()`** でプリペアド化 |
+| 全件取得 | ページング無しで重い | `limit`/`offset` か cursor。スキーマに `index()` を張る |
+
 ## ハマりどころ / アンチパターン
 - **「Honoに付いている」前提**：DB機能は内蔵されていない。ORM・ドライバ・マイグレーションは**全部自前で選定**する。
 - **Edge非対応のドライバを使う**：従来のNode用ドライバ（TCPコネクションプール前提の `pg` 生接続等）はWorkers等のEdgeで動かない／不安定。**Edge対応か**を必ず確認（D1 / Hyperdrive / Prisma Accelerate / Neon serverless 等）。

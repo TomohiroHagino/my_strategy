@@ -126,4 +126,16 @@ err := db.Transaction(func(tx *gorm.DB) error {
 - **エラー無視**：GORM は `.Error` にエラーを入れる。`First` 等の戻りで**毎回 `.Error` を確認**する。
 - **ハンドラに SQL 直書き**：リポジトリ層へ隔離しないとテスト・差し替えが効かない。
 
+## GORM 特有の現象と対策（N+1以外）
+GORMは「ゼロ値の扱い」と「エラーが戻り値でなく `.Error`」が独特で、ここを知らないと静かにバグる。
+| 現象 / 罠 | なぜ起きる | 対策 |
+|---|---|---|
+| **ゼロ値が更新されない** | `Updates(struct)` は構造体の**ゼロ値（`""`,`0`,`false`）を更新対象から除外**する。「在庫を0にする」「フラグをfalseに」が反映されない | 意図的にゼロへ更新するなら **`map[string]interface{}{"count": 0}`** か **`Select("count").Updates(...)`** |
+| **論理削除なのに残る/出ない** | モデルに `gorm.DeletedAt` があると `Delete` は**ソフトデリート**になり、以降のクエリから自動で除外される | 物理削除は `Unscoped().Delete(...)`、削除済みも取るなら `Unscoped().Find(...)`。挙動を把握して使う |
+| **`Find` が未発見でもエラーにならない** | `First`/`Last`/`Take` は未発見で `ErrRecordNotFound` を返すが、`Find`（スライス取得）は0件でもエラー無し | 「1件取得」は `First`＋`errors.Is(err, gorm.ErrRecordNotFound)`、`Find` は件数 `len()` で判定 |
+| **エラーは例外でなく `.Error`** | Goに例外は無い。`db.First(&u)` の失敗は戻り値でなく `.Error` に入る | **毎回 `if err := db....Error; err != nil`** を確認（ハマりどころ「エラー無視」と同根） |
+| `Save` が全カラムを上書き | `Save` は全フィールドをUPDATE（ゼロ値も含む） | 部分更新は `Updates`/`Update`、`Save` は「全項目を保存する」時だけ |
+| 大量挿入/取得が遅い | ループで `Create` するとN回SQL | **`CreateInBatches(&rows, 100)`**、大量取得は **`FindInBatches`** で分割 |
+| `Preload` と `Joins` の取り違え | `Preload`＝別クエリでまとめ取り（安全）。`Joins`＝SQL JOINで1クエリだが、**has-many では行が重複** | 多対1/1対1の絞り込みは `Joins`、コレクションは `Preload`。ネストは `Preload("Posts.Comments")` |
+
 ## 関連: [project_structure.md](./project_structure.md)

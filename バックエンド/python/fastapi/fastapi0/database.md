@@ -126,7 +126,22 @@ async def read_user(uid: int, db: AsyncSession = Depends(get_db)):
 - **`Annotated[Session, Depends(get_db)]`** を型エイリアス化して全エンドポイントで共有（DRY）。
 - **CRUD 関数を別モジュール**（`crud.py`）に切り出し、エンドポイントは薄く保つ（リポジトリ的に）。
 - 一覧は必ず `.limit()/.offset()` で**ページネーション**（無制限取得を避ける）。
-- リレーション読み込みは `selectinload`/`joinedload` で**N+1を潰す**。
+- リレーション読み込みは `selectinload`/`joinedload` で**N+1を潰す**（戦略の使い分けは下記）。
+
+### N+1 とローディング戦略の使い分け
+relationship の既定は `lazy="select"`＝**アクセス毎にクエリ＝N+1の元**。`.options(...)` で eager 化する。
+```python
+from sqlalchemy.orm import selectinload, joinedload
+# コレクション（1対多/多対多）→ selectinload（別クエリ IN 取得・行が増殖しない）
+stmt = select(User).options(selectinload(User.posts))
+# 1対1/多対1 → joinedload（JOINで1クエリ）。※コレクションに joinedload を使うと行が重複
+stmt = select(Post).options(joinedload(Post.owner))
+# ネスト
+select(User).options(selectinload(User.posts).selectinload(Post.comments))
+```
+- **コレクションに `joinedload` を使うと結果行が増殖**（直積）→ コレクションは `selectinload` が基本。`.unique()` が要る場合もある。
+- 強制検出：relationship に **`lazy="raise"`** を設定すると、eager 指定漏れの遅延ロードが例外になり炙り出せる。
+- **async 特有**：非同期セッションでは**暗黙の遅延ロードが例外**（`MissingGreenlet`）になる。関連は必ず `selectinload`/`joinedload` で**事前に**ロードしておく。
 
 ## ハマりどころ / アンチパターン
 - **セッション開閉ミス（最頻）**：`get_db` を `yield` で書かず `return` にすると `finally` が走らず**接続リーク**。必ず `try/finally`（または `with`）。
@@ -135,6 +150,15 @@ async def read_user(uid: int, db: AsyncSession = Depends(get_db)):
 - **sync/async 混在**：`async def` エンドポイント内で同期セッションをブロッキング呼び出し→イベントループを止めて逆に遅い。エンジンと関数の同期/非同期を揃える。
 - **`Depends` 外でセッション生成**：グローバルに1つだけ作って共有→スレッド/リクエスト間で状態が壊れる。必ずリクエストごとに生成。
 - **SQLite を本番で**：開発用。本番は PostgreSQL（同期は `psycopg`、非同期は `asyncpg`）。
+
+### SQLAlchemy 特有の現象と対策（N+1以外）
+| 現象 | なぜ | 対策 |
+|---|---|---|
+| **`DetachedInstanceError`** | 既定 `expire_on_commit=True` で **commit後に属性が expire** → セッションclose後にアクセスすると再ロードしようとするが session が無い | `sessionmaker(expire_on_commit=False)`、または **close前に必要属性をロード/DTO(Pydantic)化**。FastAPIなら依存性のセッション生存中にレスポンス用へ詰め替え |
+| 結果の取り出し方 | 2.x の `session.execute(select(...))` は Row を返す | エンティティ列なら **`.scalars().all()`**、`joinedload` でコレクションを取った時は **`.unique().scalars()`** |
+| commit後に最新値が要る | `add`/`commit` 後、サーバ生成値（IDや default）が古い場合 | `db.refresh(obj)` で再読込 |
+| コネクションプール枯渇 | 既定プールに上限。サーバレス/高並行で枯渇 | `create_engine(..., pool_size=, max_overflow=, pool_pre_ping=True)` を調整 |
+| 同一性マップの混乱 | 同一セッション内で同じ主キーは**同一インスタンス**を返す（一次キャッシュ） | セッションはリクエストスコープで短命に。長寿命セッションを避ける |
 
 ## 関連
 [dependency_injection.md](./dependency_injection.md) … `Depends`/`yield` の仕組み（get_db の土台） / [pydantic_models.md](./pydantic_models.md) … モデル↔スキーマ変換（`from_attributes`）

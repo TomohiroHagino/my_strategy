@@ -89,6 +89,10 @@ const posts = await prisma.post.findMany({ include: { author: true } })
 // Mongoose なら populate
 const posts = await Post.find().populate('author')
 ```
+**対策の選択肢**:
+- Prisma **`include`**（関連を丸ごと）vs **`select`**（必要フィールドだけ・軽量）。ネストも可 `include: { author: { include: { profile: true } } }`。
+- 件数だけなら `_count`（`include: { _count: { select: { comments: true } } }`）。
+- 生SQLなら `WHERE id IN (...)` でまとめて1クエリ。Mongooseは `populate`（N+1を1クエリ化）、読み取りは `.lean()` で軽いプレーンオブジェクト。
 
 ## トランザクション
 ```js
@@ -107,6 +111,17 @@ await prisma.$transaction(async (tx) => {
 - **マイグレーション忘れ**：スキーマ変更したら `prisma migrate` 等を必ず流す。
 - **生 SQL の文字列連結**：SQL インジェクション。必ずパラメータ化／ORM のクエリを使う。
 - **接続情報のハードコード**：`DATABASE_URL` は環境変数で（[config_env.md](./config_env.md) 想定）。
+
+## ORM 特有の現象と対策（N+1以外）
+| 現象 / 罠 | なぜ起きる | 対策 |
+|---|---|---|
+| **コネクションプール枯渇** | `PrismaClient` をリクエスト毎/モジュール乱立で複数生成すると接続が枯渇。特に**サーバレス**は関数インスタンス毎に接続を張り上限に達する | **シングルトンを1個**だけ生成して共有。サーバレスは `connection_limit` を調整、Prisma Accelerate / Data Proxy で接続をプール |
+| ページング無しの `findMany` | 全件取得で重い・メモリ増 | `take`/`skip`（オフセット）か **cursor ページング**（`cursor`/`take`）。一覧は必ず上限 |
+| `$transaction` の使い分け | 配列バッチ（独立操作の原子化）とインタラクティブ（コールバックでロジック込み）は用途が違う | 独立操作は配列 `$transaction([...])`、条件分岐を挟むなら `$transaction(async (tx) => {...})` |
+| インデックス欠如 | 検索/結合カラムにindexが無いと全表スキャン | schema に `@@index([...])` / `@unique`。マイグレーションを流す |
+| 複雑クエリがORMで書けない | 集計・ウィンドウ関数など | `$queryRaw`（パラメータ化必須・型は手当て） |
+| Mongoose の罠 | `populate` のN+1、スキーマ外フィールドの混入、ドキュメントが重い | `populate` でまとめ、読み取りは `.lean()`、`strict` でスキーマ外を弾く |
+| 浮いたPromise/await漏れ | `await` 忘れで未解決Promiseを使う | DB呼び出しは必ず `await`（土台の罠 → [../../../../フロントエンド/javascript/落とし穴.md](../../../../フロントエンド/javascript/落とし穴.md)） |
 
 ## 関連
 [project_structure.md](./project_structure.md)

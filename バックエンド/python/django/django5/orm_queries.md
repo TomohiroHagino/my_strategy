@@ -49,7 +49,16 @@ Article.objects.values_list("id", flat=True) # [1, 2, 3] のように列だけ
   # M2M・逆参照（多対多/1対多）は prefetch_related → 別クエリでまとめ取り
   for a in Article.objects.prefetch_related("categories"):
       print([c.name for c in a.categories.all()])  # N回ではなく2クエリ
+
+  # 絞り込んだ/別属性に格納する prefetch は Prefetch() オブジェクト
+  from django.db.models import Prefetch
+  Article.objects.prefetch_related(
+      Prefetch("comments",
+               queryset=Comment.objects.filter(approved=True),
+               to_attr="approved_comments")   # a.approved_comments で参照
+  )
   ```
+  > 使い分け: **FK/OneToOne → `select_related`（JOIN）**、**M2M/逆参照 → `prefetch_related`（別クエリIN取得）**。条件付き・別名は `Prefetch`。
 - **トランザクション**: 複数の書き込みをまとめて、途中失敗で全部巻き戻す。
   ```python
   with transaction.atomic():
@@ -74,6 +83,15 @@ Article.objects.values_list("id", flat=True) # [1, 2, 3] のように列だけ
 - **スライス後にfilter不可**: `qs[:10].filter(...)` はエラー。絞り込みはスライス前に。
 - **N件取得で `F()` を使わずカウンタ加算**: `obj.view_count += 1; obj.save()` は読み→書きの間に競合する。`update(view_count=F("view_count") + 1)` でDB内加算する。
 - **`null` を含む `exclude`**: SQLのNULL三値論理で直感と違う結果になることがある。NULLは `isnull=True` で明示的に扱う。
+
+## さらに知っておく現象（性能・整合）
+| 現象 / 罠 | なぜ | 対策 |
+|---|---|---|
+| 不要な全カラム取得 | 既定で全列をロードしモデル生成 | **`only("id","title")` / `defer("body")`**、表示だけなら **`values()` / `values_list()`**（辞書/タプルで軽量） |
+| Python ループで集計 | `sum(a.likes for a in qs)` は全件ロード | **`aggregate(Sum("likes"))`**、グループ別は **`annotate(Count("comments"))`** でDB集計 |
+| 競合する read-modify-write | `obj.n += 1; obj.save()` は読み書きの間に競合 | **`F("n") + 1`** でDB内更新。在庫減算等は `select_for_update()`（行ロック・`transaction.atomic` 内） |
+| QuerySet 再評価でクエリ増 | 遅延評価＋結果キャッシュ。別変数でスライス/再イテレートすると再クエリ | 使い回すなら `qs = list(qs)` で一度マテリアライズ |
+| 接続の張り直し | リクエスト毎に接続を開閉すると負荷時に重い | `DATABASES` の **`CONN_MAX_AGE`**（永続接続）を設定。プーラ併用も検討 |
 
 ## 関連
 [models.md](./models.md) / [migrations.md](./migrations.md) / [security.md](./security.md)
