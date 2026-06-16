@@ -9,7 +9,17 @@
 ```
 006_engineer_learning_list/
 ├── README.md            ← これ（構成＋各ファイルの書式）
-├── 言語共通概念/        ✅ 言語をまたぐ概念（値渡しと参照…全11言語比較）
+├── 言語共通概念/        ✅ 言語をまたぐ概念（値渡し/型/並行/エラー処理/等価性…全11言語比較）
+├── 設計/                ✅ 言語/FWの上の設計思想（DDD / クリーンアーキ…言語横断）
+│   ├── README.md                  ← 設計の索引
+│   ├── ddd.md                     ← ドメイン駆動設計（戦略＋戦術）
+│   ├── クリーンアーキテクチャ.md   ← 依存の向き／DIP／ヘキサゴナル・オニオン
+│   ├── solid.md                   ← SOLID 5原則（SRP/OCP/LSP/ISP/DIP）
+│   ├── レイヤードアーキテクチャ.md ← 古典4層／MVC・3層との関係
+│   ├── cqrsとイベントソーシング.md ← CQRS と ES（別物・片方でも成立）
+│   ├── デザインパターン.md         ← GoF 23個 全網羅（生成5/構造7/振る舞い11）
+│   ├── モノリスとマイクロサービス.md ← 境界の引き方／モジュラモノリス
+│   └── エラー設計.md              ← Result/Option vs 例外（設計判断）
 ├── バックエンド/
 │   ├── ruby/            ✅ Ruby（フォルダ化・深掘り）
 │   │   ├── README.md            ← Ruby言語の概要
@@ -88,15 +98,29 @@
 │   ├── docker/          ← コンテナ（Dockerfile/Compose/本番運用 完成）
 │   ├── 障害対応/         ← SRE（切り分け/対応判断フロー/復旧/ポストモーテム 完成）
 │   └── 負荷検証/         ← 性能（指標/k6/飽和点/チューニング 完成）
-└── DevOps/              ✅ 上を"つなぐ"上位レイヤ（完成）
-    ├── ci_cd.md / ci_tools.md       ← CI/CD・GitHub Actions の例
-    ├── deploy_strategies.md         ← rolling / blue-green / canary / flag
-    ├── dora_metrics.md              ← DORA 4 Keys（デプロイ頻度/リードタイム/MTTR/変更失敗率）
-    ├── gitops.md                    ← GitOps（Argo CD / Flux）
-    ├── observability.md             ← 可観測性（metrics/logs/traces・SLI/SLO）
-    ├── automation_quality.md        ← 品質ゲート・シフトレフト
-    ├── culture.md                   ← CALMS・トランクベース・blameless
-    └── pitfalls.md                  ← 罠まとめ
+├── データベース/        ✅ DBエンジンそのもの（SQL/型/トランザクション/インデックス）
+│   ├── README.md                  ← DBの索引
+│   ├── mysql.md                   ← MySQL（InnoDB/utf8mb4/分離レベル/レプリ）
+│   ├── postgresql.md              ← PostgreSQL（JSONB/拡張/MVCC/VACUUM/接続プール）
+│   ├── mysqlとpostgresqlの違い.md  ← どっちを選ぶか（10観点比較＋選定判断）
+│   └── redis.md                   ← Redis（インメモリKVS・直接書き込み/データ型/TTL）
+├── DevOps/              ✅ 上を"つなぐ"上位レイヤ（完成）
+│   ├── ci_cd.md / ci_tools.md       ← CI/CD・GitHub Actions の例
+│   ├── deploy_strategies.md         ← rolling / blue-green / canary / flag
+│   ├── dora_metrics.md              ← DORA 4 Keys（デプロイ頻度/リードタイム/MTTR/変更失敗率）
+│   ├── gitops.md                    ← GitOps（Argo CD / Flux）
+│   ├── observability.md             ← 可観測性（metrics/logs/traces・SLI/SLO）
+│   ├── automation_quality.md        ← 品質ゲート・シフトレフト
+│   ├── culture.md                   ← CALMS・トランクベース・blameless
+│   └── pitfalls.md                  ← 罠まとめ
+└── 生成AI/             ✅ LLMアプリ開発レイヤ（作って動かして運用する側）
+    ├── README.md                   ← 索引・全体像・設計判断の早見
+    ├── llm基礎.md                  ← トークン/コンテキスト/温度/推論/モデル選び
+    ├── プロンプト設計.md            ← 指示/Few-shot/構造化出力/インジェクション対策
+    ├── rag.md                      ← 検索拡張生成（embedding/ベクトルDB/チャンク/再ランク）
+    ├── エージェント.md              ← tool use/関数呼び出し/ReAct/MCP/マルチエージェント
+    ├── 評価と監視.md                ← eval/LLM-as-judge/ハルシネーション/トレース
+    └── 運用とコスト.md              ← レイテンシ/プロンプトキャッシュ/課金/レート制限/フォールバック
 ```
 
 > モバイルは **Flutter / React Native / SwiftUI / Jetpack Compose** の4種を整備済み。

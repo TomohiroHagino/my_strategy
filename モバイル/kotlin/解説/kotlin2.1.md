@@ -55,6 +55,7 @@ Kotlin は「Java の問題を型で直す」言語。文法の前に、この7�
 ```kotlin
 var nonNull: String = "ok"     // null 不可
 var maybe: String? = null      // null 可
+
 val len = maybe?.length ?: 0   // null なら 0
 val forced = maybe!!           // null なら例外（危険）
 ```
