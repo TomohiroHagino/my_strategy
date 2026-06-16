@@ -118,9 +118,11 @@
     ├── llm基礎.md                  ← トークン/コンテキスト/温度/推論/モデル選び
     ├── プロンプト設計.md            ← 指示/Few-shot/構造化出力/インジェクション対策
     ├── rag.md                      ← 検索拡張生成（embedding/ベクトルDB/チャンク/再ランク）
-    ├── エージェント.md              ← tool use/関数呼び出し/ReAct/MCP/マルチエージェント
+    ├── エージェント.md              ← tool use/関数呼び出し/ReAct/マルチエージェント
+    ├── mcp.md                       ← Model Context Protocol（Host/Client/Server・3 primitives・接続標準）
     ├── 評価と監視.md                ← eval/LLM-as-judge/ハルシネーション/トレース
-    └── 運用とコスト.md              ← レイテンシ/プロンプトキャッシュ/課金/レート制限/フォールバック
+    ├── 運用とコスト.md              ← レイテンシ/プロンプトキャッシュ/課金/レート制限/フォールバック
+    └── ハンズオン/                  ← 実習編（setup＋項目別8本・Claude/Gemini/ChatGPT実API・コピペで動かす）
 ```
 
 > モバイルは **Flutter / React Native / SwiftUI / Jetpack Compose** の4種を整備済み。
