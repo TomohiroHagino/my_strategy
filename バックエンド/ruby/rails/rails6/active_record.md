@@ -103,5 +103,18 @@ user.with_lock { user.update!(...) }
 - 複数DBで読み取り直後の書き込み/書き込み直後の読み取りはレプリカ遅延に注意（[multiple_databases.md](./multiple_databases.md)）。
 - `find` は無いと例外、`find_by` は nil。混同して `NoMethodError on nil` を出さない。
 
+## ActiveRecord 特有の現象と対策（N+1以外）
+| 現象 / 罠 | なぜ起きる | 対策 |
+|---|---|---|
+| `count` / `size` / `length` の取り違え | `count` は毎回 `SELECT COUNT`、`size` はロード済みなら配列長・未ロードならCOUNT、`length` は**必ず全件ロード** | 一覧描画後の件数は `size`、件数だけなら `count` |
+| 関連件数で COUNT 乱発 | `post.comments.count` を一覧ループで呼ぶ | **`counter_cache`**（`belongs_to ..., counter_cache: true` ＋ `comments_count` カラム） |
+| 大量データでメモリ枯渇 | `Post.all.each` は全件展開 | **`find_each` / `in_batches`** で分割 |
+| 不要な全カラム取得 | `Post.all` は全列でモデル生成 | **`pluck` / `select`** で必要分だけ |
+| 存在確認が重い | `where(...).present?` は全件ロード | **`exists?`**（`SELECT 1 LIMIT 1` 相当） |
+| `save` の握り潰し | `save` は失敗を `false` で返すだけ | 確実に検知する所は **`save!`**（例外） |
+| コネクションプール枯渇 | Puma のスレッド数と `pool` 不一致で `ConnectionTimeoutError` | `pool` ≥ スレッド数 |
+| タイムゾーンずれ | `Time.now` はサーバTZ依存 | **`Time.current` / `Time.zone.now`**、DBはUTC保存 |
+| `after_commit` のタイミング | `after_save` 時点はまだコミット前 | 外部通知・ジョブ投入は **`after_commit`** で |
+
 ## 関連
 [model.md](./model.md) / [multiple_databases.md](./multiple_databases.md) / [console.md](./console.md) / [testing.md](./testing.md) / [zeitwerk.md](./zeitwerk.md) / [pitfalls.md](./pitfalls.md)

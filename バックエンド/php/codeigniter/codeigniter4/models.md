@@ -98,5 +98,30 @@ class User extends Entity
 - **`is_unique` の自分自身除外忘れ**：更新時に `is_unique[users.email,id,{id}]` の `,id,{id}` を付けないと自分のメールで弾かれる。
 - **Entity と array の混同**：`$returnType` を変えると `$user['name']` ↔ `$user->name` が変わる。呼び出し側と揃える。
 
+## N+1 問題と「関連が無い」CI4特有の事情
+**CI4 の Model には Eloquent / ActiveRecord のような関連（`hasMany`/`belongsTo` の eager loading）が標準で無い**。だから一覧で関連を引くと、素直に書くと N+1 を踏みやすい。
+```php
+// NG: 投稿ごとに著者をクエリ → N+1（投稿N件で 1+N 回）
+foreach ($postModel->findAll() as $post) {
+    $post['author'] = $userModel->find($post['user_id']); // ループ内クエリ
+}
+```
+**対策**:
+- **IDをまとめて1クエリ**：一覧の外部キーを集め、`whereIn` で一括取得 → PHP側で紐付け。
+```php
+$posts = $postModel->findAll();
+$ids   = array_column($posts, 'user_id');
+$users = $userModel->whereIn('id', array_unique($ids))->findAll();   // 1クエリ
+$byId  = array_column($users, null, 'id');
+foreach ($posts as &$p) { $p['author'] = $byId[$p['user_id']] ?? null; }
+```
+- **JOINで済むなら Query Builder の `join`**（1クエリ）。→ [database_query_builder.md](./database_query_builder.md)
+- **関連を多用するなら**サードパーティ（`tatter\relations` 等）の導入も検討。ただし素のCI4は「自分でまとめる」が基本姿勢。
+- **検出**：CI4 のデバッグツールバーで**発行クエリ数**を確認（一覧で件数に比例して増えていたらN+1）。
+
+## その他の現象
+- **論理削除の自動除外**：`$useSoftDeletes = true` だと `find`/`findAll` は `deleted_at IS NULL` を自動付与。削除済みも見るなら `withDeleted()`、削除済みだけは `onlyDeleted()`。
+- **大量取得**：`findAll()` は全件をメモリに載せる。大量なら **`paginate()`** か、Query Builder の `get($limit, $offset)` で分割。
+
 ## 関連
 [database_query_builder.md](./database_query_builder.md) / [validation.md](./validation.md) / [controllers.md](./controllers.md)

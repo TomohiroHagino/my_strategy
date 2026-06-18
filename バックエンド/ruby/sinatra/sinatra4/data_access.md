@@ -72,5 +72,17 @@ users.insert(name: "Taro")
 - **ORMの混在**：ARとSequelを両方入れて中途半端に使うと接続が二重化して混乱。**どちらか一本**に決める。
 - ハードコードした接続情報をコミットしない。秘密情報は環境変数へ。→ [config_testing.md](./config_testing.md)
 
+## N+1 と ORM 特有の現象（足したORM次第）
+SinatraにDB層は無いが、**AR/Sequel を足した時点で N+1 等のORMの罠はそのまま発生**する。対策は採用したORMに準じる。
+- **ActiveRecord を採用**：N+1対策・他の現象（`count`/`size`、`counter_cache`、`find_each`、`pluck`、`update_all`の副作用スキップ等）は **Railsと完全に同じ**。→ [../rails/rails7/active_record.md](../../rails/rails7/active_record.md)
+- **Sequel を採用**：関連の eager load は **`eager(:posts)`（別クエリ）/ `eager_graph(:posts)`（JOIN）** で N+1 を潰す。
+```ruby
+# Sequel での N+1 回避
+User.eager(:posts).all        # users 1回 + posts まとめて1回
+User.eager_graph(:posts).all  # JOIN 1クエリ（where で関連を絞る時）
+```
+- **検出**：Sinatraは bullet が効きにくいので、`ActiveRecord::Base.logger`（or Sequel の `DB.loggers`）で**発行SQLを目視**、または rack-mini-profiler を挟む。
+- **コネクションプール**：マルチスレッド運用ではプールを必ず設定（ハマりどころの接続ライフサイクルと同根）。
+
 ## 関連
 [../rails/rails7/active_record.md](../../rails/rails7/active_record.md) / [config_testing.md](./config_testing.md) / [rack_and_filters.md](./rack_and_filters.md)

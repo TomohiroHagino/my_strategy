@@ -85,7 +85,11 @@ Post.not_published = Post.where.not(published: true)  # where.not は4〜
 # NG: posts.each { |p| p.user.name } で N+1
 @posts = Post.includes(:user)   # OK: まとめて読む
 ```
-- 検出は **bullet** gem。
+**対策の使い分け**:
+- **`includes`** … preload/eager_load を自動選択（第一手）。
+- **`preload`** … 常に別クエリ2回。**`eager_load`** … LEFT JOIN 1クエリ（`where` で関連を絞る時）。
+- **`joins`** … INNER JOIN で絞り込みだけ（関連はロードしない）。
+- 検出は **bullet** gem（`strict_loading` は 6.1 以降で Rails 4 には無い）。
 
 ## トランザクション / ロックとは
 ```ruby
@@ -110,6 +114,16 @@ end
 - **`update_all` / `delete_all`** はバリデーション・コールバックを通さない（`insert_all`/`upsert_all` は7系で、4には無い）。
 - **time zone**：`Time.now` でなく `Time.current` / `Time.zone.now`。`config.active_record.time_zone_aware_attributes` を確認。
 - マイグレーションとモデルの不整合（カラム消したのにコード参照が残る）。
+
+## ActiveRecord 特有の現象と対策（N+1以外）
+| 現象 / 罠 | なぜ起きる | 対策 |
+|---|---|---|
+| `count`/`size`/`length` の取り違え | `count`=毎回COUNT、`size`=ロード済みなら配列長、`length`=必ず全件ロード | 一覧後の件数は `size`、件数だけ `count` |
+| 関連件数で COUNT 乱発 | `post.comments.count` を一覧ループで | **`counter_cache`** で1カラム参照に |
+| 大量データでメモリ枯渇 | `Post.all.each` は全件展開 | **`find_each` / `find_in_batches`** |
+| 不要な全カラム取得 | `Post.all` は全列でモデル生成 | **`pluck` / `select`** |
+| 存在確認が重い | `present?` は全件ロード | **`exists?`** |
+| コネクションプール枯渇 | Webサーバのスレッド/プロセス数と `pool` 不一致 | `pool` ≥ 同時実行数 |
 
 ## 関連
 [model.md](./model.md) / [controller.md](./controller.md) / [active_job.md](./active_job.md)

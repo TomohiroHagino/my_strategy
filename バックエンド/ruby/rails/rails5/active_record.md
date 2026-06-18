@@ -91,7 +91,15 @@ Post.or(Post.where(a: 1), Post.where(b: 2))  # Rails 5 で or が追加
 # NG: posts.each { |p| p.user.name } で N+1
 @posts = Post.includes(:user)   # OK: まとめて読む
 ```
-- 検出は **bullet** gem。
+**対策の使い分け**:
+- **`includes(:user)`** … 状況に応じ preload/eager_load を自動選択（第一手）。
+- **`preload(:user)`** … 常に別クエリ2回（JOINしたくない時）。
+- **`eager_load(:user)`** … LEFT JOIN 1クエリ（関連を `where` で絞る一覧）。
+- **`joins(:comments)`** … INNER JOIN で絞り込みだけ（関連はロードしない）。
+```ruby
+Post.eager_load(:user).where(users: { active: true })  # where で関連条件
+```
+- 検出は **bullet** gem（※ `strict_loading` は 6.1 以降。Rails 5 には無い）。
 
 ## トランザクション / ロックとは
 ```ruby
@@ -106,9 +114,20 @@ end
 - **`belongs_to` 必須化**（Rails 5 最頻）→ 親が任意なら `optional: true`。
 - **N+1** → `includes`。
 - **`save` と `save!`**：前者は失敗を `false` で返すだけ。握り潰し注意。
-- **`default_scope`** の副作用 → 予期せぬ絞り込み。基本使わない。
+- **`default_scope`** の副作用 → 予期せぬ絞り込み。基本使わない（外すには `unscoped`）。
 - **time zone**：`Time.now` でなく `Time.current` / `Time.zone.now`。
 - マイグレーションとモデルの不整合（カラム消したのにコード参照が残る）。
+
+## ActiveRecord 特有の現象と対策（N+1以外）
+| 現象 / 罠 | なぜ起きる | 対策 |
+|---|---|---|
+| `count`/`size`/`length` の取り違え | `count`=毎回COUNT、`size`=ロード済みなら配列長、`length`=必ず全件ロード | 一覧後の件数は `size`、件数だけ `count` |
+| 関連件数で COUNT 乱発 | `post.comments.count` を一覧ループで | **`counter_cache`** で1カラム参照に |
+| 大量データでメモリ枯渇 | `Post.all.each` は全件展開 | **`find_each` / `in_batches`** |
+| 不要な全カラム取得 | `Post.all` は全列でモデル生成 | **`pluck` / `select`** |
+| 存在確認が重い | `present?` は全件ロード | **`exists?`** |
+| コネクションプール枯渇 | Puma スレッド数と `pool` 不一致 | `pool` ≥ スレッド数 |
+| `update_all`/`delete_all` で整合崩れ | バリデーション・コールバックをスキップ | 副作用が要るなら1件ずつ |
 
 ## 関連
 [model.md](./model.md) / [controller.md](./controller.md) / [pitfalls.md](./pitfalls.md)

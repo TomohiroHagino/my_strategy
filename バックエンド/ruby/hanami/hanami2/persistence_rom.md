@@ -106,5 +106,17 @@ Hanami に「DTO」という名前の専用層は無いが、役割は分担さ�
 - **関連の取り忘れ**：`combine` していない関連にアクセスして取れない／追加クエリになる。読み出し時に何を持たせるか意識する。
 - バージョン差に注意：DB 層は **2.2 で固まった**部分で、記法やパス（`app/db`・自動登録の詳細）は版で変わり得る。**手元の version の公式ガイドで裏取り**してから書くのが安全。
 
+## N+1 と ROM 特有の現象と対策
+ROM/Hanami は ActiveRecord と思想が逆で、**「遅延ロードを持たない＝必要な関連は取得時に明示する」**設計。ここを掴むとN+1も他の罠も理解できる。
+| 現象 / 罠 | なぜ起きる | 対策 |
+|---|---|---|
+| **N+1** | `combine` していない関連にアクセスし、その都度クエリ（または取れない） | 取得時に **`combine(:posts)`**（`includes` 相当・別クエリでまとめ取り）。ネストは `combine(posts: :comments)` |
+| 「遅延ロードで後から取れる」誤解 | ROMの struct は**不変・遅延ロード無し**。AR感覚で `user.posts` を期待すると取れない/別クエリ | **読み出し時に何を持たせるか先に決める**。Relation/Repository のメソッドに「この一覧は posts 込み」を名前で固定 |
+| JOINとまとめ取りの混同 | `combine` は別クエリでまとめ取り。JOINで絞りたい場面と違う | 関連で**絞り込みたい**なら Relation で `join` を使う。**関連を持たせたい**なら `combine` |
+| 集計をRubyでやる | struct を全件ロードして Ruby で数える | Relation 側で集計（`select`/`group`/カウント）してから返す |
+| 大量データのメモリ | `.to_a` で全件配列化 | Relation の `each`（ストリーム的取得）やページング（`limit`/`offset`）で分割 |
+| Repository を通さない更新 | struct は不変。直接変更しようとして失敗 | 書き込みは **changeset**（`create`/`update`）経由のみ |
+- **検出**：ROMのロガー（`ROM` の `:sql` ロガー）で発行SQLを目視し、一覧で件数に比例してクエリが増えていないか確認。
+
 ## 関連
 [dependency_injection.md](./dependency_injection.md) / [validation.md](./validation.md) / [project_structure.md](./project_structure.md)
