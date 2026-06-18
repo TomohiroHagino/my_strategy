@@ -22,6 +22,7 @@ JetBrains の**静的型付け・null安全**言語。**Android 開発の公式�
 - IDE: **Android Studio**（→ [android_studio.md](./android_studio.md)）
 - UI: **Jetpack Compose**（→ [compose/](./compose/)）/ XML
 - 非同期: Coroutines / Flow、DI: Hilt、ビルド: Gradle
+- SDK/バージョン管理: **SDKMAN!**（Kotlin/Gradle/JDK を管理。サーバKtor/Spring や KMP のCLI開発で便利）→ [../../バックエンド/java/環境管理.md](../../バックエンド/java/環境管理.md)
 
 ## このフォルダの構成
 - [解説/kotlin2.1.md](./解説/kotlin2.1.md) … **Kotlin 言語そのもの**の解説（最新版）。文法・null安全・コルーチン・K2 コンパイラなど。

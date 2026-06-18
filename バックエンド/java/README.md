@@ -42,4 +42,5 @@
 
 ## このフォルダの構成
 - [解説/java21.md](./解説/java21.md) … Java 21（LTS）の言語そのものの解説（文法・型・record/sealed/パターンマッチ・Virtual Threads）。
+- [環境管理.md](./環境管理.md) … **SDKMAN! の使い方**（JVM系SDKの複数バージョン管理：Java/Kotlin/Gradle/Maven/Scala…。インストール・`use`/`default`/`.sdkmanrc`・ベンダー選び・CI/Docker・他ツールとの棲み分け）。
 - [spring/](./spring/) … Spring / Spring Boot（フレームワーク）。フラッグシップの版別リファレンス。
